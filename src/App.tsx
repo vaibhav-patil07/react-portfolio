@@ -199,12 +199,17 @@ function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Carousel functionality
+  // Carousel functionality with touch support
   useEffect(() => {
     if (articles.length === 0) return;
 
     let currentSlide = 0;
     const totalSlides = articles.length;
+    let autoPlayInterval: NodeJS.Timeout;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+    let startTime = 0;
 
     const updateCarousel = (slideIndex: number) => {
       const track = document.getElementById("carousel-track");
@@ -237,10 +242,95 @@ function Home() {
       updateCarousel(currentSlide);
     };
 
-    // Event listeners
+    const startAutoPlay = () => {
+      autoPlayInterval = setInterval(nextSlide, 5000);
+    };
+
+    const stopAutoPlay = () => {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+      }
+    };
+
+    // Touch event handlers
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      startTime = Date.now();
+      isDragging = true;
+      stopAutoPlay();
+      
+      const track = document.getElementById("carousel-track");
+      const container = document.getElementById("carousel-container");
+      
+      if (track) {
+        track.style.transition = "none";
+      }
+      
+      if (container) {
+        container.classList.add("dragging");
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return;
+      
+      touchEndX = e.touches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      const track = document.getElementById("carousel-track");
+      
+      if (track) {
+        const currentTransform = currentSlide * (100 / totalSlides);
+        const dragPercentage = (diff / track.offsetWidth) * 100;
+        const newTransform = currentTransform + dragPercentage;
+        track.style.transform = `translateX(-${newTransform}%)`;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (!isDragging) return;
+      
+      isDragging = false;
+      const track = document.getElementById("carousel-track");
+      const container = document.getElementById("carousel-container");
+      
+      if (track) {
+        track.style.transition = "transform 0.3s ease-in-out";
+      }
+      
+      if (container) {
+        container.classList.remove("dragging");
+      }
+
+      const diff = touchStartX - touchEndX;
+      const timeDiff = Date.now() - startTime;
+      const velocity = Math.abs(diff) / timeDiff;
+      
+      // Determine if it's a swipe (minimum distance and velocity)
+      const minSwipeDistance = 50;
+      const minVelocity = 0.3;
+      
+      if (Math.abs(diff) > minSwipeDistance || velocity > minVelocity) {
+        if (diff > 0) {
+          // Swiped left - next slide
+          nextSlide();
+        } else {
+          // Swiped right - previous slide
+          prevSlide();
+        }
+      } else {
+        // Not enough movement, snap back to current slide
+        updateCarousel(currentSlide);
+      }
+      
+      // Restart autoplay after a delay
+      setTimeout(startAutoPlay, 3000);
+    };
+
+    // Mouse/click event handlers
     const nextBtn = document.getElementById("next-btn");
     const prevBtn = document.getElementById("prev-btn");
     const indicators = document.querySelectorAll(".indicator");
+    const carouselContainer = document.getElementById("carousel-container");
 
     if (nextBtn) nextBtn.addEventListener("click", nextSlide);
     if (prevBtn) prevBtn.addEventListener("click", prevSlide);
@@ -249,23 +339,39 @@ function Home() {
       indicator.addEventListener("click", () => {
         currentSlide = index;
         updateCarousel(currentSlide);
+        stopAutoPlay();
+        setTimeout(startAutoPlay, 3000);
       });
     });
 
-    // Auto-play carousel
-    const autoPlay = setInterval(nextSlide, 5000);
+    // Add touch event listeners
+    if (carouselContainer) {
+      carouselContainer.addEventListener("touchstart", handleTouchStart, { passive: false });
+      carouselContainer.addEventListener("touchmove", handleTouchMove, { passive: false });
+      carouselContainer.addEventListener("touchend", handleTouchEnd, { passive: false });
+    }
+
+    // Start auto-play
+    startAutoPlay();
 
     // Cleanup
     return () => {
-      clearInterval(autoPlay);
+      stopAutoPlay();
       if (nextBtn) nextBtn.removeEventListener("click", nextSlide);
       if (prevBtn) prevBtn.removeEventListener("click", prevSlide);
+      
       indicators.forEach((indicator, index) => {
         indicator.removeEventListener("click", () => {
           currentSlide = index;
           updateCarousel(currentSlide);
         });
       });
+
+      if (carouselContainer) {
+        carouselContainer.removeEventListener("touchstart", handleTouchStart);
+        carouselContainer.removeEventListener("touchmove", handleTouchMove);
+        carouselContainer.removeEventListener("touchend", handleTouchEnd);
+      }
     };
   }, [articles]);
 
@@ -362,7 +468,7 @@ function Home() {
         <div className="right-section">
           <div className="articles-carousel">
             <h2 className="carousel-title">Latest Articles</h2>
-            <div className="carousel-container">
+            <div className="carousel-container" id="carousel-container">
               {loading ? (
                 <div className="carousel-loading">
                   <div className="loading-spinner"></div>

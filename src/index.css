@@ -43,6 +43,27 @@ body {
   background-color: var(--bg-primary);
   padding-top: 80px; /* Space for fixed navbar */
   transition: background-color 0.3s ease, color 0.3s ease;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* Touch-friendly global styles */
+button, a, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure minimum touch target size */
+button, a, input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Smooth scrolling for touch devices */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Navigation */
@@ -87,11 +108,24 @@ body {
   text-decoration: none;
   color: var(--text-primary);
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
 }
 
-.nav-menu a:hover {
+.nav-menu a:hover,
+.nav-menu a:focus {
   color: var(--accent-color);
+  background-color: var(--bg-secondary);
+  outline: none;
+}
+
+.nav-menu a:active {
+  transform: scale(0.95);
+  background-color: var(--border-color);
 }
 
 /* Mobile Navigation */
@@ -102,12 +136,26 @@ body {
   font-size: 1.5rem;
   color: var(--text-primary);
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.8rem;
   z-index: 1001;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  min-width: 44px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
 }
 
-.mobile-menu-toggle:hover {
+.mobile-menu-toggle:hover,
+.mobile-menu-toggle:focus {
   color: var(--accent-color);
+  background-color: var(--bg-secondary);
+  outline: none;
+}
+
+.mobile-menu-toggle:active {
+  transform: scale(0.95);
+  background-color: var(--border-color);
 }
 
 .nav-menu.mobile-open {
@@ -128,12 +176,23 @@ body {
   font-size: 1.2rem;
   transition: all 0.3s ease;
   background-color: var(--bg-secondary);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  min-width: 44px;
 }
 
-.theme-toggle:hover {
+.theme-toggle:hover,
+.theme-toggle:focus {
   transform: scale(1.1);
   border-color: var(--accent-color);
   box-shadow: 0 2px 8px var(--shadow-color);
+  outline: none;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
 }
 
 /* Homepage Layout */
@@ -188,12 +247,27 @@ body {
   border-radius: 15px;
   background: var(--bg-secondary);
   box-shadow: 0 10px 30px var(--shadow-color);
+  cursor: grab;
+  touch-action: pan-x;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.carousel-container:active {
+  cursor: grabbing;
+}
+
+.carousel-container.dragging {
+  cursor: grabbing;
 }
 
 .carousel-track {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease-in-out;
+  will-change: transform;
 }
 
 .article-card {
@@ -318,23 +392,34 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-color);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-primary);
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  min-width: 44px;
 }
 
-.carousel-btn:hover {
+.carousel-btn:hover,
+.carousel-btn:focus {
   background: var(--accent-color);
   color: white;
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
 }
 
 /* Carousel Indicators */
@@ -345,17 +430,44 @@ body {
 }
 
 .indicator {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: var(--border-color);
   cursor: pointer;
   transition: all 0.3s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.indicator.active {
+.indicator::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.indicator.active::before {
   background: var(--accent-color);
   transform: scale(1.2);
+}
+
+.indicator:hover::before,
+.indicator:focus::before {
+  background: var(--accent-color);
+  transform: scale(1.1);
+}
+
+.indicator:active {
+  transform: scale(0.9);
 }
 
 /* Decorative Frame */
@@ -438,8 +550,8 @@ body {
 }
 
 .social-button {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -448,13 +560,24 @@ body {
   justify-content: center;
   transition: all 0.3s ease;
   text-decoration: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 44px;
+  min-width: 44px;
 }
 
-.social-button:hover {
+.social-button:hover,
+.social-button:focus {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px var(--shadow-color);
   border-color: var(--accent-color);
   background-color: var(--accent-color);
+  outline: none;
+}
+
+.social-button:active {
+  transform: translateY(-1px) scale(0.95);
+  transition: transform 0.1s ease;
 }
 
 .social-button img {
@@ -463,7 +586,8 @@ body {
   transition: filter 0.3s ease;
 }
 
-.social-button:hover img {
+.social-button:hover img,
+.social-button:focus img {
   filter: brightness(0) invert(1);
 }
 
@@ -619,8 +743,8 @@ body {
   }
 
   .carousel-btn {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     font-size: 1rem;
   }
 
@@ -753,8 +877,8 @@ body {
   }
 
   .carousel-btn {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     font-size: 0.9rem;
   }
 
