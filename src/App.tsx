@@ -51,6 +51,7 @@ function Home() {
   const [articles, setArticles] = useState<MediumArticle[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Clean HTML content to readable text
   const cleanHtmlContent = (htmlContent: string): string => {
@@ -177,6 +178,27 @@ function Home() {
     localStorage.setItem("darkMode", JSON.stringify(newDarkMode));
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu when clicking on a link
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // Close mobile menu on window resize (when switching to desktop)
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Carousel functionality
   useEffect(() => {
     if (articles.length === 0) return;
@@ -255,18 +277,25 @@ function Home() {
           <div className="nav-logo">
             <h2>Vaibhav Patil</h2>
           </div>
-          <ul className="nav-menu">
+          <button
+            className="mobile-menu-toggle"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? "✕" : "☰"}
+          </button>
+          <ul className={`nav-menu ${mobileMenuOpen ? "mobile-open" : ""}`}>
             <li>
-              <a href="#home">Home</a>
+              <a href="#home" onClick={closeMobileMenu}>Home</a>
             </li>
             <li>
-              <a href="#about">About</a>
+              <a href="#about" onClick={closeMobileMenu}>About</a>
             </li>
             <li>
-              <a href="#projects">Projects</a>
+              <a href="#projects" onClick={closeMobileMenu}>Projects</a>
             </li>
             <li>
-              <a href="#contact">Contact</a>
+              <a href="#contact" onClick={closeMobileMenu}>Contact</a>
             </li>
             <li>
               <button
