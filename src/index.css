@@ -302,7 +302,7 @@ html {
   border: 4px solid var(--border-color);
   border-top: 4px solid var(--accent-color);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 2s linear infinite;
   margin-bottom: 1rem;
 }
 
@@ -390,6 +390,8 @@ html {
   justify-content: space-between;
   gap: 1.5rem;
   z-index: 3;
+  max-width: calc(100% - 5rem); /* Ensure it doesn't exceed container width */
+  box-sizing: border-box;
 }
 
 /* Navigation Background - only around indicators */
@@ -401,6 +403,9 @@ html {
   backdrop-filter: blur(5px);
   border-radius: 25px;
   padding: 0.8rem 1.2rem;
+  overflow: hidden; /* Prevent overflow */
+  max-width: 100%; /* Ensure it doesn't exceed parent width */
+  box-sizing: border-box;
 }
 
 /* Carousel Navigation */
@@ -425,13 +430,7 @@ html {
   min-width: 44px;
 }
 
-.carousel-btn.prev {
-  margin-right: auto;
-}
-
-.carousel-btn.next {
-  margin-left: auto;
-}
+/* Carousel button positioning handled in responsive sections */
 
 .carousel-btn:hover,
 .carousel-btn:focus {
@@ -766,11 +765,25 @@ html {
   }
   
   .carousel-navigation {
-    left: 2.5rem;
-    right: 2.5rem;
-    bottom: 1.8rem;
-    margin: 0.4rem;
-    padding: 0.7rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 44px 1fr 44px; /* Fixed width for buttons, flexible center */
+    gap: 1rem;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .carousel-btn {
+    justify-self: center; /* Center within grid cell */
+  }
+  
+  .carousel-indicators {
+    display: flex;
+    justify-content: center; /* Center the dots */
+    align-items: center;
+    justify-self: center; /* Center within grid cell */
   }
 
   .article-card h3 {
@@ -892,31 +905,14 @@ html {
   }
 
   .carousel-container {
-    height: 350px;
+    height: 420px; /* Increased height for better spacing */
     max-width: 100%;
   }
 
   .article-card {
-    padding: 2rem 1.5rem 5.5rem 1.5rem;
+    padding: 1.8rem 1.5rem 7rem 1.5rem; /* More bottom padding */
   }
   
-  .article-card p {
-    margin-bottom: 1.6rem;
-  }
-  
-  .read-more {
-    bottom: 3.8rem;
-    left: 1.5rem;
-  }
-  
-  .carousel-navigation {
-    left: 2rem;
-    right: 2rem;
-    bottom: 1.5rem;
-    margin: 0.3rem;
-    padding: 0.6rem;
-  }
-
   .article-card h3 {
     font-size: 1.2rem;
     line-height: 1.3;
@@ -926,33 +922,57 @@ html {
   .article-card p {
     font-size: 0.9rem;
     line-height: 1.5;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.5rem;
   }
 
   .article-date {
     font-size: 0.8rem;
     margin-bottom: 0.8rem;
   }
+  
+  .read-more {
+    bottom: 5rem; /* Moved higher to avoid navigation overlap */
+    left: 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .carousel-navigation {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1.2rem;
+    display: grid;
+    grid-template-columns: 36px 1fr 36px; /* Fixed width for buttons, flexible center */
+    gap: 0.8rem;
+    align-items: center;
+    padding: 0;
+  }
 
   .carousel-btn {
     width: 36px;
     height: 36px;
     font-size: 0.9rem;
-  }
-
-  .carousel-navigation {
-    gap: 1.2rem;
-    bottom: 1.2rem;
+    flex-shrink: 0;
+    justify-self: center; /* Center within grid cell */
   }
   
   .carousel-indicators {
-    gap: 1rem;
-    padding: 0.6rem 0.8rem;
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 0.8rem;
+    justify-self: center; /* Center within grid cell */
   }
 
   .indicator {
-    width: 10px;
-    height: 10px;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  
+  .indicator::before {
+    width: 14px;
+    height: 14px;
   }
 
   .frame {
@@ -1027,32 +1047,68 @@ html {
   }
   
   .carousel-container {
-    height: 320px;
+    height: 400px; /* Increased height for better spacing */
+    display: flex;
+    flex-direction: column;
+
   }
   
   .article-card {
-    padding: 1.8rem 1.2rem 5rem 1.2rem;
-  }
-  
-  .article-card p {
-    margin-bottom: 1.4rem;
-  }
-  
-  .read-more {
-    bottom: 3.5rem;
-    left: 1.2rem;
-  }
-  
-  .carousel-navigation {
-    left: 1.5rem;
-    right: 1.5rem;
-    bottom: 1.2rem;
-    margin: 0.2rem;
-    padding: 0.5rem;
+    padding: 1.6rem 1.2rem 6.5rem 1.2rem; /* More bottom padding */
   }
   
   .article-card h3 {
     font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .article-card p {
+    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  
+  .read-more {
+    bottom: 4.8rem; /* Moved higher to avoid navigation overlap */
+    left: 1.2rem;
+    font-size: 0.85rem;
+  }
+  
+  .carousel-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 2rem);
+    padding:0;
+    margin-left: 1rem;
+  }
+  
+  .carousel-btn {
+    width: 8px;
+    height: 8px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    justify-self: center; /* Center within grid cell */
+  }
+  
+  .carousel-indicators {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    justify-self: center; /* Center within grid cell */
+  }
+  
+  .indicator {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+  }
+  
+  .indicator::before {
+    width: 8px;
+    height: 8px;
   }
   
   .frame {
