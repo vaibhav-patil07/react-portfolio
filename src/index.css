@@ -273,13 +273,16 @@ html {
 .article-card {
   flex: 0 0 auto;
   width: calc(100% / var(--total-slides));
-  padding: 3rem 2.5rem 4.5rem 2.5rem;
+  padding: 3rem 2.5rem 7rem 2.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  overflow-y: auto;
+  position: relative;
 }
+
 
 /* Loading and Error States */
 .carousel-loading,
@@ -357,7 +360,6 @@ html {
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 2rem;
-  flex-grow: 1;
 }
 
 .read-more {
@@ -366,7 +368,10 @@ html {
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  align-self: flex-start;
+  position: absolute;
+  bottom: 4.5rem;
+  left: 2.5rem;
+  z-index: 5;
 }
 
 .read-more:hover {
@@ -378,12 +383,24 @@ html {
 .carousel-navigation {
   position: absolute;
   bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 2.5rem;
+  right: 2.5rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1.5rem;
-  z-index: 10;
+  z-index: 3;
+}
+
+/* Navigation Background - only around indicators */
+.carousel-indicators {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 25px;
+  padding: 0.8rem 1.2rem;
 }
 
 /* Carousel Navigation */
@@ -408,6 +425,14 @@ html {
   min-width: 44px;
 }
 
+.carousel-btn.prev {
+  margin-right: auto;
+}
+
+.carousel-btn.next {
+  margin-left: auto;
+}
+
 .carousel-btn:hover,
 .carousel-btn:focus {
   background: var(--accent-color);
@@ -422,12 +447,6 @@ html {
   transition: transform 0.1s ease;
 }
 
-/* Carousel Indicators */
-.carousel-indicators {
-  display: flex;
-  gap: 0.8rem;
-  align-items: center;
-}
 
 .indicator {
   width: 16px;
@@ -734,7 +753,24 @@ html {
   }
 
   .article-card {
-    padding: 2.5rem 2rem 4rem 2rem;
+    padding: 2.5rem 2rem 6rem 2rem;
+  }
+  
+  .article-card p {
+    margin-bottom: 1.8rem;
+  }
+  
+  .read-more {
+    bottom: 4rem;
+    left: 2rem;
+  }
+  
+  .carousel-navigation {
+    left: 2.5rem;
+    right: 2.5rem;
+    bottom: 1.8rem;
+    margin: 0.4rem;
+    padding: 0.7rem;
   }
 
   .article-card h3 {
@@ -750,6 +786,11 @@ html {
 
   .carousel-navigation {
     gap: 1.5rem;
+  }
+  
+  .carousel-indicators {
+    gap: 1.2rem;
+    padding: 0.7rem 1rem;
   }
 
   .frame {
@@ -856,7 +897,24 @@ html {
   }
 
   .article-card {
-    padding: 2rem 1.5rem 3.5rem 1.5rem;
+    padding: 2rem 1.5rem 5.5rem 1.5rem;
+  }
+  
+  .article-card p {
+    margin-bottom: 1.6rem;
+  }
+  
+  .read-more {
+    bottom: 3.8rem;
+    left: 1.5rem;
+  }
+  
+  .carousel-navigation {
+    left: 2rem;
+    right: 2rem;
+    bottom: 1.5rem;
+    margin: 0.3rem;
+    padding: 0.6rem;
   }
 
   .article-card h3 {
@@ -885,6 +943,11 @@ html {
   .carousel-navigation {
     gap: 1.2rem;
     bottom: 1.2rem;
+  }
+  
+  .carousel-indicators {
+    gap: 1rem;
+    padding: 0.6rem 0.8rem;
   }
 
   .indicator {
@@ -968,7 +1031,24 @@ html {
   }
   
   .article-card {
-    padding: 1.8rem 1.2rem 3rem 1.2rem;
+    padding: 1.8rem 1.2rem 5rem 1.2rem;
+  }
+  
+  .article-card p {
+    margin-bottom: 1.4rem;
+  }
+  
+  .read-more {
+    bottom: 3.5rem;
+    left: 1.2rem;
+  }
+  
+  .carousel-navigation {
+    left: 1.5rem;
+    right: 1.5rem;
+    bottom: 1.2rem;
+    margin: 0.2rem;
+    padding: 0.5rem;
   }
   
   .article-card h3 {
