@@ -187,6 +187,23 @@ function Home() {
     setMobileMenuOpen(false);
   };
 
+  // Handle smooth scroll with offset for fixed navbar
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const navbarHeight = 80; // Height of fixed navbar
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    closeMobileMenu();
+  };
+
   // Close mobile menu on window resize (when switching to desktop)
   useEffect(() => {
     const handleResize = () => {
@@ -392,16 +409,16 @@ function Home() {
           </button>
           <ul className={`nav-menu ${mobileMenuOpen ? "mobile-open" : ""}`}>
             <li>
-              <a href="#home" onClick={closeMobileMenu}>Home</a>
+              <a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a>
             </li>
             <li>
-              <a href="#about" onClick={closeMobileMenu}>About</a>
+              <a href="#about" onClick={(e) => handleNavClick(e, 'about')}>About</a>
             </li>
             <li>
-              <a href="#projects" onClick={closeMobileMenu}>Projects</a>
+              <a href="#projects" onClick={(e) => handleNavClick(e, 'projects')}>Projects</a>
             </li>
             <li>
-              <a href="#contact" onClick={closeMobileMenu}>Contact</a>
+              <a href="#contact" onClick={(e) => handleNavClick(e, 'contact')}>Contact</a>
             </li>
             <li>
               <button
@@ -416,8 +433,8 @@ function Home() {
         </div>
       </nav>
 
-      {/* Main Content Area */}
-      <div className="homepage-container">
+      {/* Home Section */}
+      <section id="home" className="homepage-container">
         {/* Left Section with Frame */}
         <div className="left-section">
           <div className="frame">
@@ -541,7 +558,130 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="about-section">
+        <div className="about-container">          
+          <div className="about-content">
+            <div className="about-left">
+                <div className="about-card">
+                  <h3 className="about-card-title">What I Bring</h3>
+                  <div className="about-card-content">
+                    <p className="about-card-paragraph">
+                      I have completed my <strong>B.Tech from MIT Academy of Engineering, Pune</strong>, where I developed a strong foundation in software engineering principles and modern development practices.
+                    </p>
+                    <p className="about-card-paragraph">
+                      I work on <strong>scalable web applications</strong> that can handle high traffic and complex business requirements. My focus is on building robust, maintainable, and efficient solutions that grow with business needs.
+                    </p>
+                    <p className="about-card-paragraph">
+                      I have extensive experience in <strong>Microservices architecture</strong>, designing and implementing distributed systems that are resilient, scalable, and easy to maintain. This includes working with service-to-service communication, API gateways, and containerized deployments.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="about-right">
+                <div className="experience-section">
+                  <h3 className="experience-title">Professional Experience</h3>
+                  
+                  <div className="timeline-container">
+                    <div className="timeline-track">
+                  <div className="timeline-item right" data-tooltip="Full-time position at Contentstack, Mumbai. Working on scalable web applications and APIs.">
+                    <div className="timeline-content">
+                      <div className="timeline-marker"></div>
+                      <h4 className="timeline-position">Software Engineer I</h4>
+                      <h5 className="timeline-company">Contentstack</h5>
+                      <div className="timeline-duration">Mar 2025 - Present</div>
+                      <div className="timeline-tech">
+                        <span className="tech-pill">NestJS</span>
+                        <span className="tech-pill">gRPC</span>
+                        <span className="tech-pill">MongoDB</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="timeline-item left" data-tooltip="Full-time role in Bangalore. Worked with Node.js, Express.js and other modern technologies to build robust applications.">
+                    <div className="timeline-content">
+                      <div className="timeline-marker"></div>
+                      <h4 className="timeline-position">Associate Software Engineer</h4>
+                      <h5 className="timeline-company">Contentstack</h5>
+                      <div className="timeline-duration">Aug 2023 - Jun 2025</div>
+                      <div className="timeline-tech">
+                        <span className="tech-pill">NestJS</span>
+                        <span className="tech-pill">ExpressJS</span>
+                        <span className="tech-pill">MongoDB</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="timeline-item right" data-tooltip="Remote internship in Mumbai. Worked with team which designs and develops Contentstack's management API using JavaScript and Node.js.">
+                    <div className="timeline-content">
+                      <div className="timeline-marker"></div>
+                      <h4 className="timeline-position">Associate Software Intern</h4>
+                      <h5 className="timeline-company">Contentstack</h5>
+                      <div className="timeline-duration">Jan 2023 - Aug 2023</div>
+                      <div className="timeline-tech">
+                        <span className="tech-pill">ExpressJS</span>
+                        <span className="tech-pill">NodeJS</span>
+                        <span className="tech-pill">MongoDB</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="timeline-item left" data-tooltip="Remote internship in Pune. Worked on BMC Database automation to provide end to end database patches, using Python and Selenium.">
+                    <div className="timeline-content">
+                      <div className="timeline-marker"></div>
+                      <h4 className="timeline-position">R&D Intern</h4>
+                      <h5 className="timeline-company">BMC Software</h5>
+                      <div className="timeline-duration">Jun 2022 - Aug 2022</div>
+                      <div className="timeline-tech">
+                        <span className="tech-pill">Python</span>
+                        <span className="tech-pill">Selenium</span>
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="projects-section">
+        <div className="projects-container">
+          <h2 className="projects-title">Projects</h2>
+          <p className="projects-description">Coming soon...</p>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="contact-section">
+        <div className="contact-container">
+          <h2 className="contact-title">Get In Touch</h2>
+          <p className="contact-description">
+            Feel free to reach out to me for collaboration opportunities or just to say hello!
+          </p>
+          <div className="contact-buttons">
+            <a
+              href="mailto:your.email@example.com"
+              className="contact-button primary"
+            >
+              Send Email
+            </a>
+            <a
+              href="https://www.linkedin.com/in/vaibhav-patil-04756a213/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-button secondary"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
