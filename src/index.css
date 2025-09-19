@@ -1390,6 +1390,17 @@ html {
   }
 
   /* About section tablet responsive */
+
+  .about-content {
+    flex-direction: column;
+  }
+
+  .about-right {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    width: 100%
+  }
+
   .about-section {
     padding: 1.5rem 0;
   }
