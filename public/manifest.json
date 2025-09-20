@@ -1,0 +1,26 @@
+{
+  "name": "Vaibhav Patil - Software Engineer Portfolio",
+  "short_name": "Vaibhav Patil",
+  "description": "Portfolio website of Vaibhav Patil - Software Engineer specializing in full-stack development",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/vp-logo-v2.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/vp-logo-v2.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["portfolio", "developer", "software-engineer"],
+  "lang": "en-US",
+  "scope": "/",
+  "id": "vaibhav-patil-portfolio"
+}
