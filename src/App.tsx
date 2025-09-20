@@ -52,6 +52,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showExperiencePopup, setShowExperiencePopup] = useState(false);
 
   // Clean HTML content to readable text
   const cleanHtmlContent = (htmlContent: string): string => {
@@ -641,6 +642,19 @@ function Home() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Show More Button */}
+                  <div className="timeline-item right timeline-show-more-item">
+                    <div className="timeline-content show-more-content">
+                      <div className="timeline-marker show-more-marker"></div>
+                      <button 
+                        className="show-more-btn"
+                        onClick={() => setShowExperiencePopup(true)}
+                      >
+                        Show More Experience
+                      </button>
+                    </div>
+                  </div>
                     </div>
                   </div>
                 </div>
@@ -682,6 +696,40 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* Experience Popup */}
+      {showExperiencePopup && (
+        <div className="experience-popup-overlay" onClick={() => setShowExperiencePopup(false)}>
+          <div className="experience-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="popup-header">
+              <h3>Additional Experience</h3>
+              <button 
+                className="popup-close"
+                onClick={() => setShowExperiencePopup(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="popup-content">
+              <div className="experience-item">
+                <h4 className="experience-position">Fullstack Android Developer Intern</h4>
+                <h5 className="experience-company">CodeKul - Corporate Software Development Training Institute</h5>
+                <div className="experience-type">Internship</div>
+                <div className="experience-duration">Jun 2021 - Aug 2021 · 3 mos</div>
+                <div className="experience-location">Pune, Maharashtra, India · Remote</div>
+                <p className="experience-description">
+                  Developed LogIn, Sign Up, and Home Page ( Android Java ). Also developed backend API's in Spring Boot
+                </p>
+                <div className="experience-skills">
+                  <span className="skill-pill">Java</span>
+                  <span className="skill-pill">Spring Boot</span>
+                  <span className="skill-pill">Android Development</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -903,6 +903,217 @@ html {
   transform: translateY(-1px);
 }
 
+/* Timeline Show More Button as Card */
+.timeline-show-more-item {
+  margin: 0.1rem 0;
+}
+
+.show-more-content {
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 2px dashed var(--accent-color);
+  box-shadow: 0 4px 15px var(--shadow-color);
+  transition: all 0.3s ease;
+  text-align: center;
+  position: relative;
+}
+
+.show-more-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--shadow-color);
+  border-color: var(--accent-hover);
+}
+
+.show-more-marker {
+  width: 16px;
+  height: 16px;
+  background: var(--accent-color);
+  border: 3px solid var(--bg-primary);
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.timeline-show-more-item.right .show-more-marker {
+  left: -41px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.show-more-content:hover .show-more-marker {
+  background: var(--accent-hover);
+  transform: translateY(-50%) scale(1.2);
+  z-index: 200;
+}
+
+.show-more-btn {
+  background: transparent;
+  color: var(--accent-color);
+  border: none;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.show-more-btn:hover {
+  color: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.show-more-btn::after {
+  content: '→';
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.show-more-btn:hover::after {
+  transform: translateX(3px);
+}
+
+/* Experience Popup */
+.experience-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.experience-popup {
+  background: var(--bg-primary);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2rem 1rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.popup-header h3 {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.popup-close:hover {
+  background: var(--bg-secondary);
+  color: var(--accent-color);
+}
+
+.popup-content {
+  padding: 2rem;
+}
+
+.experience-item {
+  background: var(--bg-secondary);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px var(--shadow-color);
+}
+
+.experience-position {
+  color: var(--accent-color);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.experience-company {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.experience-type {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  font-style: italic;
+}
+
+.experience-duration {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+}
+
+.experience-location {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.experience-description {
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+}
+
+.experience-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-pill {
+  background: var(--accent-color);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.skill-pill:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
 /* Tooltip Styles */
 .timeline-item[data-tooltip] {
   position: relative;
@@ -1168,6 +1379,28 @@ html {
   .tech-pill {
     font-size: 0.65rem;
     padding: 0.15rem 0.5rem;
+  }
+
+  /* Popup responsive */
+  .experience-popup {
+    margin: 1rem;
+    max-height: 85vh;
+  }
+
+  .popup-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+  }
+
+  .popup-content {
+    padding: 1.5rem;
+  }
+
+  .show-more-content {
+    padding: 1.2rem;
+  }
+
+  .show-more-btn {
+    font-size: 0.95rem;
   }
 
   /* Projects section responsive */
@@ -1493,6 +1726,48 @@ html {
   .tech-pill {
     font-size: 0.6rem;
     padding: 0.15rem 0.4rem;
+  }
+
+  /* Popup mobile responsive */
+  .experience-popup-overlay {
+    padding: 1rem;
+  }
+
+  .experience-popup {
+    margin: 0.5rem;
+    max-height: 90vh;
+  }
+
+  .popup-header {
+    padding: 1rem 1rem 0.8rem 1rem;
+  }
+
+  .popup-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .popup-content {
+    padding: 1rem;
+  }
+
+  .experience-item {
+    padding: 1.5rem;
+  }
+
+  .experience-position {
+    font-size: 1.1rem;
+  }
+
+  .experience-company {
+    font-size: 1rem;
+  }
+
+  .show-more-content {
+    padding: 1rem;
+  }
+
+  .show-more-btn {
+    font-size: 0.9rem;
   }
 
   /* Tooltip adjustments for mobile */
