@@ -450,7 +450,7 @@ function Home() {
         <div className="left-section">
           <div className="frame">
             <img
-              src="/images/vaibhav.png"
+              src="https://static.vaibhavpatil.dev/vaibhav/vaibhav-512.png"
               alt="Vaibhav Patil"
               className="frame-image"
             />
