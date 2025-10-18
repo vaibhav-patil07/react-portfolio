@@ -473,7 +473,7 @@ function Home() {
                 <img src="/images/linkedin.svg" alt="LinkedIn" />
               </a>
               <a
-                href="https://github.com/VaibhavPatil4240"
+                href="https://github.com/vaibhav-patil07"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="social-button"
@@ -698,7 +698,7 @@ function Home() {
                     </svg>
                   </a>
                   <a
-                    href="https://github.com/VaibhavPatil4240"
+                    href="https://github.com/vaibhav-patil07/image-processor-api"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="project-link-icon"
