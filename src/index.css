@@ -633,11 +633,11 @@ html {
 }
 
 .frame-image {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto 2rem auto;
+  margin: 0 auto 1rem auto;
   border: 2px solid var(--accent-color);
   box-shadow: 0 8px 24px var(--shadow-color);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
