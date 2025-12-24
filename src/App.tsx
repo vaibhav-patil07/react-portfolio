@@ -451,6 +451,12 @@ function Home() {
           <div className="frame">
             <img
               src="https://static.vaibhavpatil.dev/vaibhav/vaibhav-512.png"
+              srcSet="https://static.vaibhavpatil.dev/vaibhav/vaibhav-256.png 256w,
+                      https://static.vaibhavpatil.dev/vaibhav/vaibhav-384.png 384w,
+                      https://static.vaibhavpatil.dev/vaibhav/vaibhav-512.png 512w"
+              sizes="(max-width: 480px) 150px,
+                     (max-width: 768px) 180px,
+                     200px"
               alt="Vaibhav Patil"
               className="frame-image"
             />
