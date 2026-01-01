@@ -322,6 +322,9 @@ html {
   width: 100%;
   height: 400px;
   overflow: hidden;
+  background: var(--bg-primary);
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 .carousel-wrapper-custom {
@@ -331,6 +334,7 @@ html {
   box-shadow: 0 10px 30px var(--shadow-color), 
   0 20px 60px rgba(0, 0, 0, 0.15),
   0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 .article-card {
@@ -343,10 +347,6 @@ html {
   opacity: 1 !important;
   background: var(--bg-secondary);
   border-radius: 15px;
-  box-shadow: 0 10px 30px var(--shadow-color), 
-              0 20px 60px rgba(0, 0, 0, 0.15),
-              0 0 0 1px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--border-color);
   transition: box-shadow 0.3s ease;
 }
 
