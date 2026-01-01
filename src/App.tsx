@@ -1,5 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface MediumArticle {
   title: string;
@@ -53,6 +62,9 @@ function Home() {
   const [error, setError] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showExperiencePopup, setShowExperiencePopup] = useState(false);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
   // Clean HTML content to readable text
   const cleanHtmlContent = (htmlContent: string): string => {
@@ -217,181 +229,19 @@ function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Carousel functionality with touch support
+  // Track carousel state for indicators
   useEffect(() => {
-    if (articles.length === 0) return;
-
-    let currentSlide = 0;
-    const totalSlides = articles.length;
-    let autoPlayInterval: NodeJS.Timeout;
-    let touchStartX = 0;
-    let touchEndX = 0;
-    let isDragging = false;
-    let startTime = 0;
-
-    const updateCarousel = (slideIndex: number) => {
-      const track = document.getElementById("carousel-track");
-      const cards = document.querySelectorAll(".article-card");
-      const indicators = document.querySelectorAll(".indicator");
-
-      if (track && cards.length && indicators.length) {
-        // Calculate the percentage to move based on number of articles
-        const movePercentage = slideIndex * (100 / totalSlides);
-        track.style.transform = `translateX(-${movePercentage}%)`;
-
-        // Update active states
-        cards.forEach((card, index) => {
-          card.classList.toggle("active", index === slideIndex);
-        });
-
-        indicators.forEach((indicator, index) => {
-          indicator.classList.toggle("active", index === slideIndex);
-        });
-      }
-    };
-
-    const nextSlide = () => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateCarousel(currentSlide);
-    };
-
-    const prevSlide = () => {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateCarousel(currentSlide);
-    };
-
-    const startAutoPlay = () => {
-      autoPlayInterval = setInterval(nextSlide, 5000);
-    };
-
-    const stopAutoPlay = () => {
-      if (autoPlayInterval) {
-        clearInterval(autoPlayInterval);
-      }
-    };
-
-    // Touch event handlers
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.touches[0].clientX;
-      startTime = Date.now();
-      isDragging = true;
-      stopAutoPlay();
-      
-      const track = document.getElementById("carousel-track");
-      const container = document.getElementById("carousel-container");
-      
-      if (track) {
-        track.style.transition = "none";
-      }
-      
-      if (container) {
-        container.classList.add("dragging");
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!isDragging) return;
-      
-      touchEndX = e.touches[0].clientX;
-      const diff = touchStartX - touchEndX;
-      const track = document.getElementById("carousel-track");
-      
-      if (track) {
-        const currentTransform = currentSlide * (100 / totalSlides);
-        const dragPercentage = (diff / track.offsetWidth) * 100;
-        const newTransform = currentTransform + dragPercentage;
-        track.style.transform = `translateX(-${newTransform}%)`;
-      }
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (!isDragging) return;
-      
-      isDragging = false;
-      const track = document.getElementById("carousel-track");
-      const container = document.getElementById("carousel-container");
-      
-      if (track) {
-        track.style.transition = "transform 0.3s ease-in-out";
-      }
-      
-      if (container) {
-        container.classList.remove("dragging");
-      }
-
-      const diff = touchStartX - touchEndX;
-      const timeDiff = Date.now() - startTime;
-      const velocity = Math.abs(diff) / timeDiff;
-      
-      // Determine if it's a swipe (minimum distance and velocity)
-      const minSwipeDistance = 50;
-      const minVelocity = 0.3;
-      
-      if (Math.abs(diff) > minSwipeDistance || velocity > minVelocity) {
-        if (diff > 0) {
-          // Swiped left - next slide
-          nextSlide();
-        } else {
-          // Swiped right - previous slide
-          prevSlide();
-        }
-      } else {
-        // Not enough movement, snap back to current slide
-        updateCarousel(currentSlide);
-      }
-      
-      // Restart autoplay after a delay
-      setTimeout(startAutoPlay, 3000);
-    };
-
-    // Mouse/click event handlers
-    const nextBtn = document.getElementById("next-btn");
-    const prevBtn = document.getElementById("prev-btn");
-    const indicators = document.querySelectorAll(".indicator");
-    const carouselContainer = document.getElementById("carousel-container");
-
-    if (nextBtn) nextBtn.addEventListener("click", nextSlide);
-    if (prevBtn) prevBtn.addEventListener("click", prevSlide);
-
-    indicators.forEach((indicator, index) => {
-      indicator.addEventListener("click", () => {
-        currentSlide = index;
-        updateCarousel(currentSlide);
-        stopAutoPlay();
-        setTimeout(startAutoPlay, 3000);
-      });
-    });
-
-    // Add touch event listeners
-    if (carouselContainer) {
-      carouselContainer.addEventListener("touchstart", handleTouchStart, { passive: false });
-      carouselContainer.addEventListener("touchmove", handleTouchMove, { passive: false });
-      carouselContainer.addEventListener("touchend", handleTouchEnd, { passive: false });
+    if (!carouselApi) {
+      return;
     }
 
-    // Start auto-play
-    startAutoPlay();
+    setCount(carouselApi.scrollSnapList().length);
+    setCurrent(carouselApi.selectedScrollSnap());
 
-    // Cleanup
-    return () => {
-      stopAutoPlay();
-      if (nextBtn) nextBtn.removeEventListener("click", nextSlide);
-      if (prevBtn) prevBtn.removeEventListener("click", prevSlide);
-      
-      indicators.forEach((indicator, index) => {
-        indicator.removeEventListener("click", () => {
-          currentSlide = index;
-          updateCarousel(currentSlide);
-        });
-      });
-
-      if (carouselContainer) {
-        carouselContainer.removeEventListener("touchstart", handleTouchStart);
-        carouselContainer.removeEventListener("touchmove", handleTouchMove);
-        carouselContainer.removeEventListener("touchend", handleTouchEnd);
-      }
-    };
-  }, [articles]);
+    carouselApi.on("select", () => {
+      setCurrent(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
 
   return (
     <div>
@@ -502,77 +352,89 @@ function Home() {
         <div className="right-section">
           <div className="articles-carousel">
             <h2 className="carousel-title">Latest Articles</h2>
-            <div className="carousel-container" id="carousel-container">
-              {loading ? (
-                <div className="carousel-loading">
-                  <div className="loading-spinner"></div>
-                  <p>Loading articles...</p>
-                </div>
-              ) : error ? (
-                <div className="carousel-error">
-                  <p>{error}</p>
-                  <button onClick={fetchMediumArticles} className="retry-btn">
-                    Try Again
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <div
-                    className="carousel-track"
-                    id="carousel-track"
-                    style={
-                      {
-                        width: `${articles.length * 100}%`,
-                        "--total-slides": articles.length,
-                      } as React.CSSProperties
-                    }
-                  >
+            {loading ? (
+              <div className="carousel-loading">
+                <div className="loading-spinner"></div>
+                <p>Loading articles...</p>
+              </div>
+            ) : error ? (
+              <div className="carousel-error">
+                <p>{error}</p>
+                <button onClick={fetchMediumArticles} className="retry-btn">
+                  Try Again
+                </button>
+              </div>
+            ) : (
+              <div className="carousel-wrapper-custom">
+                <Carousel
+                  setApi={setCarouselApi}
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  plugins={[
+                    Autoplay({
+                      delay: 5000,
+                    }),
+                  ]}
+                  className="w-full max-w-[500px] mx-auto"
+                >
+                  <CarouselContent>
                     {articles.map((article, index) => (
-                      <div
-                        key={index}
-                        className={`article-card ${
-                          index === 0 ? "active" : ""
-                        }`}
-                      >
-                        <div className="article-date">
-                          {formatDate(article.pubDate)}
+                      <CarouselItem key={index}>
+                        <div className="article-card-wrapper">
+                          <div className="article-card active">
+                            <div className="article-date">
+                              {formatDate(article.pubDate)}
+                            </div>
+                            <h3>{article.title}</h3>
+                            <p>{article.description}</p>
+                            <a
+                              href={article.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="read-more"
+                            >
+                              Read More →
+                            </a>
+                          </div>
                         </div>
-                        <h3>{article.title}</h3>
-                        <p>{article.description}</p>
-                        <a
-                          href={article.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="read-more"
-                        >
-                          Read More →
-                        </a>
-                      </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+                
+                {/* Custom Bottom Navigation */}
+                <div className="carousel-navigation-bottom">
+                  <button
+                    onClick={() => carouselApi?.scrollPrev()}
+                    className="carousel-btn-bottom prev"
+                    aria-label="Previous slide"
+                  >
+                    ‹
+                  </button>
+
+                  <div className="carousel-indicators">
+                    {Array.from({ length: count }).map((_, index) => (
+                      <button
+                        key={index}
+                        className={`indicator ${index === current ? "active" : ""}`}
+                        onClick={() => carouselApi?.scrollTo(index)}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
                     ))}
                   </div>
 
-                  <div className="carousel-navigation">
-                    <button className="carousel-btn prev" id="prev-btn">
-                      ‹
-                    </button>
-
-                    <div className="carousel-indicators">
-                      {articles.map((_, index) => (
-                        <span
-                          key={index}
-                          className={`indicator ${index === 0 ? "active" : ""}`}
-                          data-slide={index}
-                        ></span>
-                      ))}
-                    </div>
-
-                    <button className="carousel-btn next" id="next-btn">
-                      ›
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
+                  <button
+                    onClick={() => carouselApi?.scrollNext()}
+                    className="carousel-btn-bottom next"
+                    aria-label="Next slide"
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
