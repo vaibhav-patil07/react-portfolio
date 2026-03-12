@@ -709,6 +709,120 @@ function Home() {
                 </div>
               </div>
             </div>
+
+            {/* VChat Project */}
+            <div className="project-card">
+              <div className="project-header">
+                <h3 className="project-title">
+                  VChat — AI Chatbot Platform & Embeddable SDK
+                </h3>
+                <div className="project-links">
+                  <a
+                    href="https://vchat.vaibhavpatil.dev/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-link-icon"
+                    title="Live Demo"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
+                  <a
+                    href="https://github.com/vaibhav-patil07/vchat"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-link-icon"
+                    title="View on GitHub"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                  </a>
+                  <a
+                    href="https://www.npmjs.com/package/vchat7"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-link-icon"
+                    title="View on npm"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 4H4v16h8V8h4v12h4V4z"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <p className="project-description">
+                A full-stack AI chatbot platform with an admin dashboard for
+                managing bots, uploading knowledge bases, and an open-source
+                React SDK (vchat7) for embedding chatbots into any website.
+                Create, configure, and deploy custom AI chatbots with
+                RAG-powered responses, real-time streaming, and a fully
+                themeable embeddable widget.
+              </p>
+              <div className="project-features">
+                <h4 className="features-title">Key Features:</h4>
+                <ul className="features-list">
+                  <li>Multi-bot management with per-bot configuration</li>
+                  <li>PDF knowledge base upload with RAG via ChromaDB</li>
+                  <li>Real-time streaming AI responses (SSE)</li>
+                  <li>Google OAuth with role-based access (admin/user)</li>
+                  <li>
+                    Three SDK modes: floating widget, inline window, headless
+                    hook
+                  </li>
+                  <li>
+                    Fully customizable theming with dark/light mode support
+                  </li>
+                  <li>Published npm package with TypeScript types</li>
+                </ul>
+              </div>
+              <div className="project-tech-stack">
+                <span className="tech-badge">React</span>
+                <span className="tech-badge">TypeScript</span>
+                <span className="tech-badge">Python</span>
+                <span className="tech-badge">FastAPI</span>
+                <span className="tech-badge">ChromaDB</span>
+                <span className="tech-badge">LiteLLM</span>
+                <span className="tech-badge">Tailwind CSS</span>
+                <span className="tech-badge">Vite</span>
+                <span className="tech-badge">Vercel</span>
+                <span className="tech-badge">Google OAuth</span>
+                <span className="tech-badge">npm SDK</span>
+              </div>
+            </div>
           </div>
         </section>
 
