@@ -836,7 +836,7 @@ function Home() {
             </p>
             <div className="contact-buttons">
               <a
-                href="mailto:vbpatil@mitaoe.ac.in"
+                href="mailto:vaibhavpatil4240@gmail.com"
                 className="contact-button primary"
               >
                 Send Email
