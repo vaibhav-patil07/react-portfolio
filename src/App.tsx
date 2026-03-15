@@ -708,9 +708,8 @@ function Home() {
                   <span className="tech-badge">S3</span>
                 </div>
               </div>
-            </div>
 
-            {/* VChat Project */}
+              {/* VChat Project */}
             <div className="project-card">
               <div className="project-header">
                 <h3 className="project-title">
@@ -822,6 +821,7 @@ function Home() {
                 <span className="tech-badge">Google OAuth</span>
                 <span className="tech-badge">npm SDK</span>
               </div>
+            </div>
             </div>
           </div>
         </section>

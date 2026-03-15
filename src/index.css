@@ -1266,9 +1266,9 @@ html {
 
 /* Projects Grid */
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
   margin-top: 3rem;
 }
 
@@ -1611,8 +1611,7 @@ html {
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .project-card {
@@ -1988,8 +1987,7 @@ html {
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.8rem;
   }
 
   .project-card {
@@ -2280,8 +2278,7 @@ html {
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 1.5rem;
   }
 
   .project-card {
