@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -29,14 +27,6 @@ export default function App() {
 }
 
 function Home() {
-  // Function to get system theme preference
-  const getSystemTheme = () => {
-    if (typeof window !== "undefined") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    return false; // Default to light if window is not available
-  };
-
   // Initialize with proper theme immediately
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -357,7 +347,7 @@ function Home() {
               />
               <h1 className="frame-greeting">Hello World!</h1>
               <h2>I'm Vaibhav Patil</h2>
-              <h3 className="frame-role">Software Engineer I, Contentstack</h3>
+              <h3 className="frame-role">Software Engineer, Zuno</h3>
               <p className="frame-description">
                 I am a software engineer with a passion for coding life into
                 ideas. I have a background in Full Stack Development and Machine
@@ -535,7 +525,7 @@ function Home() {
                           </h4>
                           <h5 className="timeline-company">Contentstack</h5>
                           <div className="timeline-duration">
-                            Mar 2025 - Present
+                            Mar 2025 - Mar 2026
                           </div>
                           <div className="timeline-tech">
                             <span className="tech-pill">NestJS</span>
